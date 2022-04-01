@@ -1,0 +1,69 @@
+server:
+  port: ${port:8082}
+  servlet:
+    application-display-name: agent-service
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.hostname}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://eureka8071.com:8071/eureka/,http://eureka8072.com:8072/eureka,http://eureka8073.com:8073/eureka
+###超时时间,默认1秒超时就进入服务降级
+hystrix:
+  command:
+    default: # 这里是要设置超时时间的方法,如新增其他方法需要增加此节点信息。
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000 #默认连接超时时间是1秒
+pagehelper:
+  helper-dialect: postgresql
+  offset-as-page-num: "true"
+  row-bounds-with-count: "true"
+  page-size-zero: "false"
+  reasonable: "false"
+  params: pageNum=pageNum;pageSize=pageSize;count=countSql;reasonable=reasonable;pageSizeZero=pageSizeZero
+  support-methods-arguments: "true"
+  auto-runtime-dialect: "false"
+  close-conn: "true"
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  executor-type: reuse
+  check-config-location: true
+spring:
+  application:
+    name: agent-service
+  datasource:
+    druid:
+      url: jdbc:postgresql://47.97.17.242:5432/cti_db?tcpKeepAlive=true&readOnly=false
+      username: postgres
+      password: g1bevzFMSyglh3nodP3wHGdQ9dOU9suxCCqDukQ3n+WZicZhLWjqL5c/LuBsBgtjizNPpC3+I1+1GJp3uxyEJw==
+      driver-class-name: org.postgresql.Driver
+      filters: config
+      connection-properties: config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMCImPm85A25FVEDGl16k9+A2fLYgLAgC37dbHt3D0VzUMVGj939wQeg2uO8uGozQcUDIITxp3DL85U5v0ko6JUCAwEAAQ==
+      connection-error-retry-attempts: 0
+      initial-size: 1
+      max-active: 50
+      min-idle: 1
+      max-wait: 20000
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size:  -1
+      max-open-prepared-statements: -1
+      validation-query: select 1
+      validation-query-timeout: 3
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 1800000
+      max-evictable-idle-time-millis: 1800000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+info:
+  name: agent-service
