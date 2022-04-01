@@ -38,7 +38,7 @@ spring:
     name: agent-service
   datasource:
     druid:
-      url: jdbc:postgresql://47.97.17.242:5432/aicall_db?tcpKeepAlive=true&readOnly=false
+      url: jdbc:postgresql://47.97.17.242:5432/cti_db?tcpKeepAlive=true&readOnly=false
       username: postgres
       password: g1bevzFMSyglh3nodP3wHGdQ9dOU9suxCCqDukQ3n+WZicZhLWjqL5c/LuBsBgtjizNPpC3+I1+1GJp3uxyEJw==
       driver-class-name: org.postgresql.Driver
